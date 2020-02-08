@@ -1,0 +1,35 @@
+{% extends "base.html" %}}
+
+{% block content%}
+<style>
+    .im {
+        margin: 2rem auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 500px;
+        max-height: 500px;
+    }
+    .pred-container {
+        margin-top: 2rem;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+</style>
+<div>
+    <div class="im">
+        <img alt="Flowers in Chania" src="{{ param.url }}">
+    </div>
+    <div class="pred-container">
+        <ol>
+            {% for pred in param.preds %}
+            <li> {{ pred }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+{% endblock %}
