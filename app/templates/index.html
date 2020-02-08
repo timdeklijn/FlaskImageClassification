@@ -2,34 +2,56 @@
 
 {% block content%}
 <style>
-    .im {
-        margin: 2rem auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        max-width: 500px;
-        max-height: 500px;
-    }
-    .pred-container {
+    card {
         margin-top: 2rem;
         font-size: 30px;
         display: flex;
         align-items: center;
-        justify-content: center;
     }
-
-
+    .card-title {
+        margin-left: 1rem;
+        color: #A9A9A9;
+    }
+    .card-content {
+        margin-left: 2rem;
+    }
+    .container {
+        width: 40%;
+    }
+    .url-form {
+        width: 40%;
+        margin: 2rem auto;
+    }
+    .button {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+    }
 </style>
-<div>
-    <div class="im">
-        <img alt="Flowers in Chania" src="{{ param.url }}">
+<div class="url-form">
+    <form method="POST" action="/">
+        {{ param.form.csrf_token }}
+        {{ param.form.url }}
+        <div class="button">
+            <input class="btn-flat" type="submit" value="Classify">
+        </div>
+    </form>
+</div>
+<div class="container">
+<div class="row">
+  <div class="card">
+    <div class="card-image">
+      <img src="{{ param.url }}">
     </div>
-    <div class="pred-container">
-        <ol>
+    <span class="card-title">Predictions</span>
+    <div class="card-content">
+        <ul>
             {% for pred in param.preds %}
-            <li> {{ pred }}</li>
+                <li>- {{ pred }}</li>
             {% endfor %}
-        </ol>
+        </ul>
     </div>
+  </div>
+</div>
 </div>
 {% endblock %}
