@@ -19,7 +19,7 @@ def download_model():
         pooling=None,
         classes=1000
     )
-    model.save(os.path.join("model", "vgg16.h5"))
+    model.save(os.path.join("vgg16.h5py"))
     print("[-] Model saved.")
 
 

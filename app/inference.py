@@ -6,7 +6,7 @@ from tensorflow.keras.applications.vgg16 import decode_predictions
 
 
 def load_model():
-    return keras.models.load_model(os.path.join("app", "model", "vgg16.h5"))
+    return keras.models.load_model("vgg16.h5py")
 
 
 def process_image(img):
