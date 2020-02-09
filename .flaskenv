@@ -1,3 +1,3 @@
-FLASK_APP=app
-FLASK_ENV=development
+FLASK_APP=wsgi
+FLASK_ENV=production
 FLASK_RUN_PORT=8008

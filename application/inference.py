@@ -1,5 +1,3 @@
-import os
-
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras.applications.vgg16 import decode_predictions

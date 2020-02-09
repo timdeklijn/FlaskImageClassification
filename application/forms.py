@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from flask_wtf.html5 import URLField
+from wtforms.fields.html5 import URLField
 from wtforms.validators import url
 
 

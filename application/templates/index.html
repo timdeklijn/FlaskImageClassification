@@ -13,13 +13,13 @@
         color: #A9A9A9;
     }
     .card-content {
-        margin-left: 2rem;
+        font-size: 1.5rem;
     }
     .container {
         width: 40%;
     }
     .url-form {
-        width: 40%;
+        width: 50%;
         margin: 2rem auto;
     }
     .button {
@@ -29,7 +29,7 @@
     }
 </style>
 <div class="url-form">
-    <form method="POST" action="/">
+    <form method="POST" action="/classify">
         {{ param.form.csrf_token }}
         {{ param.form.url }}
         <div class="button">
@@ -43,13 +43,8 @@
     <div class="card-image">
       <img src="{{ param.url }}">
     </div>
-    <span class="card-title">Predictions</span>
     <div class="card-content">
-        <ul>
-            {% for pred in param.preds %}
-                <li>- {{ pred }}</li>
-            {% endfor %}
-        </ul>
+        <span>{{ param.preds }}</span>
     </div>
   </div>
 </div>
