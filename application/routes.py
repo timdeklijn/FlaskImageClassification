@@ -1,5 +1,3 @@
-import ast
-
 import requests
 from flask import render_template, request, redirect, url_for, Blueprint
 from tensorflow.keras.preprocessing.image import load_img
@@ -14,44 +12,73 @@ print("[MODEL] model loaded...")
 ml_app = Blueprint("ml_app", __name__)
 
 
-@ml_app.route("/", methods=("GET",))
-def infer():
+@ml_app.route("/", methods=("GET", "POST"))
+def index():
     """
-    If post reques
+    Show landing page, if button is pressed, redirect to inference or error
+    page
 
     Returns
     -------
-    renders template
+    render_tempalte or redirect
     """
-    param = {"preds": "", "url": "", "form": URLForm()}
-    if request.method == "GET":
-        try:
-            p = ast.literal_eval(request.args.get('data'))  # Convert request string to dict
-            param["url"] = p["url"]
-            param["preds"] = ", ".join(p["preds"])
-        except:
-            print("[ERROR] failed parsing request dict.")
-    return render_template("index.html", param=param)
-
-
-@ml_app.route("/classify", methods=("GET", "POST"))
-def classify_image():
-    """
-    Classify an image based on URL
-
-    Get url from request, download bytes, load into Keras and classify.
-
-    :return:
-    redirect with or without prediction data
-    """
+    form = URLForm()
     if request.method == "POST":
-        url = request.form.get("url")
-        try:
-            response = requests.get(url, stream=True)
-            image = load_img(response.raw, target_size=(224, 224))
-            image = process_image(image)
-            predictions = do_inference(model, image)
-            return redirect(url_for("ml_app.infer", data={"preds": predictions, "url": url}))
-        except:
-            print("[ERROR] Failed to parse image from url.")
-    return redirect(url_for("ml_app.infer"))
+        if form.validate_on_submit():
+            return redirect(url_for("ml_app.infer", url=request.form["url"]))
+        else:
+            return redirect(url_for("ml_app.error"))
+    return render_template("index.html", form=form)
+
+
+@ml_app.route("/infer", methods=("GET", "POST"))
+def infer():
+    """
+    Handle inference requests. Load image from url, convert to NN input and perform
+    inference. Based on results redirect to error page or show result. Also handle new
+    for events.
+
+
+    Returns
+    -------
+    redirect or render_template
+    """
+
+    # Handle button press
+    form = URLForm()
+    if request.method == "POST":
+        if form.validate_on_submit():
+            return redirect(url_for("ml_app.infer", url=request.form["url"]))
+        else:
+            return redirect(url_for("ml_app.error"))
+
+    # Get URL from request and perform inference on the model
+    url = request.args.get('url')
+    try:
+        response = requests.get(url, stream=True)
+        image = load_img(response.raw, target_size=(224, 224))
+        image = process_image(image)
+        predictions = do_inference(model, image)
+        return render_template("predicted.html", param={
+            "form": URLForm(),
+            "preds": ", ".join(predictions),
+            "url": url})
+    except:
+        return redirect(url_for("ml_app.error"))
+
+
+@ml_app.route("/error", methods=("GET", "POST"))
+def error():
+    """
+    Show the error page, if another URL is passed, check if it is valid and
+    redirect to inference page
+
+    Returns
+    -------
+    render_template or redirect
+    """
+    form = URLForm()
+    if request.method == "POST":
+        if form.validate_on_submit():
+            return redirect(url_for("ml_app.infer", url=request.form["url"]))
+    return render_template("error.html", form=URLForm())

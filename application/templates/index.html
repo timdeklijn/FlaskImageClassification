@@ -2,51 +2,31 @@
 
 {% block content%}
 <style>
-    card {
-        margin-top: 2rem;
-        font-size: 30px;
-        display: flex;
-        align-items: center;
-    }
-    .card-title {
-        margin-left: 1rem;
-        color: #A9A9A9;
-    }
-    .card-content {
-        font-size: 1.5rem;
-    }
-    .container {
-        width: 40%;
-    }
-    .url-form {
-        width: 50%;
-        margin: 2rem auto;
-    }
-    .button {
-        display: block;
-        margin: 0 auto;
-        text-align: center;
-    }
+.container {
+    width: 50%;
+}
+.url-form {
+width: 50%;
+margin: 2rem auto;
+}
+.button {
+display: block;
+margin: 0 auto;
+text-align: center;
+}
+
 </style>
 <div class="url-form">
-    <form method="POST" action="/classify">
-        {{ param.form.csrf_token }}
-        {{ param.form.url }}
+    <form method="POST" action="/">
+        {{ form.csrf_token }}
+        {{ form.url }}
         <div class="button">
             <input class="btn-flat" type="submit" value="Classify">
         </div>
     </form>
 </div>
 <div class="container">
-<div class="row">
-  <div class="card">
-    <div class="card-image">
-      <img src="{{ param.url }}">
-    </div>
-    <div class="card-content">
-        <span>{{ param.preds }}</span>
-    </div>
-  </div>
-</div>
+    <h3>Image classification</h3>
+    <p>This will explain the app</p>
 </div>
 {% endblock %}

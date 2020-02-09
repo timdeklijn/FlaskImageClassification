@@ -1,0 +1,34 @@
+{% extends "base.html" %}}
+
+{% block content%}
+<style>
+    .container {
+        width: 50%;
+        font-size: 20pt;
+        color: red;
+    }
+    .url-form {
+        width: 50%;
+        margin: 2rem auto;
+    }
+    .button {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+</style>
+<div class="url-form">
+    <form method="POST" action="/error">
+        {{ form.csrf_token }}
+        {{ form.url }}
+        <div class="button">
+            <input class="btn-flat" type="submit" value="Classify">
+        </div>
+    </form>
+</div>
+<div class="container">
+    <h3>Something went wrong</h3>
+    <p>Try another image URL</p>
+</div>
+{% endblock %}
