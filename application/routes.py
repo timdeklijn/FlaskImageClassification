@@ -5,11 +5,13 @@ from tensorflow.keras.preprocessing.image import load_img
 from application.forms import URLForm
 from application.inference import process_image, do_inference, load_model
 
-print("[MODEL] loading model...")
+print("[LOG] loading model...")
 model = load_model()
-print("[MODEL] model loaded...")
+print("[LOG] model loaded...")
 
+print("[LOG] creating blueprint")
 ml_app = Blueprint("ml_app", __name__)
+print("[LOG] done creating blueprint")
 
 
 @ml_app.route("/", methods=("GET", "POST"))
@@ -22,12 +24,10 @@ def index():
     -------
     render_tempalte or redirect
     """
+    print("[LOG] Index route")
     form = URLForm()
     if request.method == "POST":
-        if form.validate_on_submit():
-            return redirect(url_for("ml_app.infer", url=request.form["url"]))
-        else:
-            return redirect(url_for("ml_app.error"))
+        return redirect(url_for("ml_app.infer", url=request.form["url"]))
     return render_template("index.html", form=form)
 
 
@@ -45,16 +45,15 @@ def infer():
     """
 
     # Handle button press
+    print("[LOG] infer route")
     form = URLForm()
     if request.method == "POST":
-        if form.validate_on_submit():
-            return redirect(url_for("ml_app.infer", url=request.form["url"]))
-        else:
-            return redirect(url_for("ml_app.error"))
-
+        return redirect(url_for("ml_app.infer", url=request.form["url"]))
     # Get URL from request and perform inference on the model
+    print("[LOG] Starting inference")
     url = request.args.get('url')
     try:
+        # Perform inference
         response = requests.get(url, stream=True)
         image = load_img(response.raw, target_size=(224, 224))
         image = process_image(image)
@@ -63,7 +62,8 @@ def infer():
             "form": URLForm(),
             "preds": ", ".join(predictions),
             "url": url})
-    except:
+    except Exception as e:
+        print(f"[ERROR] Exception in inference: {e}")
         return redirect(url_for("ml_app.error"))
 
 
