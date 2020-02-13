@@ -1,3 +1,4 @@
 FLASK_APP=wsgi
 FLASK_ENV=production
 FLASK_RUN_PORT=8008
+DEBUG=False

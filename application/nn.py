@@ -10,7 +10,7 @@ def download_model():
     -------
     None
     """
-    print("[-] Starting to download model..")
+    print("[LOG] Starting to download model..")
     model = tf.keras.applications.VGG16(
         include_top=True,
         weights='imagenet',
@@ -20,8 +20,4 @@ def download_model():
         classes=1000
     )
     model.save(os.path.join("vgg16.h5py"))
-    print("[-] Model saved.")
-
-
-if __name__ == "__main__":
-    download_model()
+    print("[LOG] Model saved.")

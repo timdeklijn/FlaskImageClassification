@@ -1,0 +1,6 @@
+venv/
+vgg16.h5py/
+Readme.rst
+__pycache__/
+.idea/
+.git/
