@@ -11,7 +11,7 @@ def download_model():
     None
     """
     print("[LOG] Starting to download model..")
-    model = tf.keras.applications.VGG16(
+    model = tf.keras.applications.ResNet50(
         include_top=True,
         weights='imagenet',
         input_tensor=None,
@@ -19,5 +19,5 @@ def download_model():
         pooling=None,
         classes=1000
     )
-    model.save(os.path.join("vgg16.h5py"))
+    model.save(os.path.join("resnet.h5py"))
     print("[LOG] Model saved.")

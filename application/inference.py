@@ -4,7 +4,7 @@ from tensorflow.keras.applications.vgg16 import decode_predictions
 
 
 def load_model():
-    return keras.models.load_model("vgg16.h5py")
+    return keras.models.load_model("resnet.h5py")
 
 
 def process_image(img):

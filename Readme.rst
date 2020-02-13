@@ -23,8 +23,3 @@ Check the browser on http://localhost:8008
 
 If running localy, add tensorflow to the requirements file. This is not needed for the containerization since the
 base image as a docker container. On another note, Pillow is required but never mentioned in the code.
-
-TODO
-----
-
-- Change model to Resnet

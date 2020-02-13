@@ -4,5 +4,4 @@ from wtforms.validators import url
 
 
 class URLForm(FlaskForm):
-    url = URLField("image URL", validators=[url()])
-
+    url = URLField("image URL", validators=[url()], render_kw={"placeholder": "Image URL"})

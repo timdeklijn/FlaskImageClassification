@@ -60,7 +60,7 @@ def infer():
         predictions = do_inference(model, image)
         return render_template("predicted.html", param={
             "form": URLForm(),
-            "preds": ", ".join(predictions),
+            "preds": ", ".join(predictions).replace("_", " "),
             "url": url})
     except Exception as e:
         print(f"[ERROR] Exception in inference: {e}")
